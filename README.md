@@ -8,7 +8,7 @@ Lancer votre server mysql ('MAMP sur mac')
 
 ## Utilisation
 
-Lancer la commande :
+Taper la commande :
 
 ```
 php bin/console server:run
