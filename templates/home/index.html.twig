@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+    <link href="{{ asset('css/Home.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <div class="structure">
+        <div class="body-pub">
+            <div class="publicité">
+                <img class="mySlides" src="{{ asset('Pub/Pub_01.png') }}" style="width: 100%;height: 100%;">
+                <img class="mySlides" src="{{ asset('Pub/Pub_02.png') }}" style="width: 100%;height: 100%;">
+                <img class="mySlides" src="{{ asset('Pub/Pub_03.png') }}" style="width: 100%;height: 100%;">
+                <div style="position: absolute;bottom: 16%;left: 50%;">
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+                </div>
+            </div>
+            <div class="promotions-home">
+            </div>
+        </div>
+
+        <div class="body-promotions">
+            <p>Promotions</p>
+            <div class="promotions-home">
+                <div class="horizontal-big"></div>
+                <div class="trait-horizontal"></div>
+            </div>
+            <div class="promotion-produit" id="promotion">
+
+{#                    {% for article in articles %}#}
+{#                <div class="produit-home-promotion">#}
+{#                            {% for image in article.images %}#}
+{#                                {% if loop.first %}#}
+{#                                    <img src="{{ image.lien }}" class="img-100"#}
+{#                                         onclick="window.location.href='article/{{article.id}}'"/>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                            <p onclick="window.location.href='article/{{article.id}}'">{{ article.nom }}</p>#}
+{#                            <a> {{ article.prixUnitaire }} &#8364</a>#}
+{#                </div>#}
+{#                    {% endfor %}#}
+
+            </div>
+            <div class="voir-plus">
+                <img src="{{ asset('icon/cross_01.png') }}" onclick="window.location.href='article/promotion'">
+            </div>
+        </div>
+
+        <div class="body-promotions">
+            <p>Nouveautés</p>
+            <div class="promotions-home">
+                <div class="horizontal-big"></div>
+                <div class="trait-horizontal"></div>
+            </div>
+            <div class="promotion-produit" id="new">
+{#                    {% for article in articles %}#}
+{#                    <div class="produit-home-promotion">#}
+{#                            {% for image in article.images %}#}
+{#                                {% if loop.first %}#}
+{#                                    <img src="{{ image.lien }}" class="img-100"#}
+{#                                         onclick="window.location.href='article/{{article.id}}'"/>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                            <p onclick="window.location.href='article/{{ article.id }}'">{{ article.nom }}</p>#}
+{#                            <a> {{ article.prixUnitaire }} &#8364</a>#}
+{#                    </div>#}
+{#                    {% endfor %}#}
+            </div>
+            <div class="voir-plus">
+                <img src="{{ asset('icon/cross_01.png') }}" onclick="window.location.href='article/'">
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = x.length
+            }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-white", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-white";
+        }
+
+        function getPromo() {
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getPromo',
+                success: function (data) {
+                    console.log(data);
+                    data.forEach(element => {
+                        $('#promotion').append('<div class="produit-home-promotion">\n' +
+
+                            '                                    <img src="'+element.image+'" class="img-100"\n' +
+                            '                                         onclick="window.location.href=\'article/'+element.id+'\'"/>\n' +
+                            '                            <p onclick="window.location.href=\'article/'+element.id+'\'">'+element.nom+'</p>\n' +
+                            '                            <a> '+element.prix_unitaire+' &#8364</a>\n' +
+                            '                    </div>')
+                    });
+
+                }
+            });
+        }
+
+        function getNew() {
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getNew',
+                success: function (data) {
+                    console.log(data);
+                    data.forEach(element => {
+                        $('#new').append('<div class="produit-home-promotion">\n' +
+
+                            '                                    <img src="'+element.image+'" class="img-100"\n' +
+                            '                                         onclick="window.location.href=\'article/'+element.id+'\'"/>\n' +
+                            '                            <p onclick="window.location.href=\'article/'+element.id+'\'">'+element.nom+'</p>\n' +
+                            '                            <a> '+element.prix_unitaire+' &#8364</a>\n' +
+                            '                    </div>')
+                    });
+
+                }
+            });
+        }
+
+        getPromo();
+        getNew()
+    </script>
+{% endblock %}

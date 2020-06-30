@@ -1,0 +1,108 @@
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ asset('css/Nav.css') }}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Heebo&display=swap" rel="stylesheet">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+
+    <div class="HEADER">
+
+        {% if app.user %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/user/user'">Compte</p>
+            </div>
+        {% else %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/login'">Se connecter</p>
+            </div>
+        {% endif %}
+        <div class="Navbar">
+            <div class="NavbarColumnLogo">
+                <img src="{{ asset('icon/Logo.png') }}" class="Logo" onclick="window.location.href='/'">
+
+                <div class="Trait"></div>
+            </div>
+
+            <div class="NavbarColumn" id="colcateg">
+                <div class="ItemArrows">
+                    <a class="MenuText" style="
+    text-decoration: none;">Catégories</a>
+                    <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="categ-content">
+                    <div class="categ-content-row">
+                    </div>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText" href="/article" style="
+    text-decoration: none;">Nouveautés</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Nouveautés') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText" style="
+    text-decoration: none;" href="/article/promotion">Promotions</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Promotions') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
+                </div>
+            </div>
+
+            <div class="NavbarTrait">
+                <div class="TraitSecond"></div>
+                <div class="search-container">
+                    <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
+                        <img src="{{ asset('../icon/SearchIcon.png') }}"
+                             style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
+                        <input class="navSearch" name="search" placeholder="Chercher un produit, une marque…"
+                               onkeyup="searchItem(this.value)">
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="dropdown-content-row">
+                        </div>
+                    </div>
+                </div>
+                <div class="TraitThird"></div>
+                <div class="Cart" onclick="window.location.href='/cart'">
+                    <img src="{{ asset('../icon/Cart.png') }}" class="CartLogo0">
+                    <div class="Panier-line"></div>
+                    <div class="Panier-number">
+                        {% block cartNumber %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</head>
+{% block body %}
+
+    <link href="{{ asset('css/New-Article.css') }}" rel="stylesheet"/>
+
+{#    <h2 class="new-article">Create new Article</h2>#}
+
+    {{ include('article/_form.html.twig') }}
+
+{#    <a href="{{ path('article_index') }}">back to list</a>#}
+{% endblock %}

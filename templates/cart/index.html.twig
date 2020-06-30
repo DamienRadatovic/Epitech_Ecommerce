@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ECommerce{% endblock %}
+
+{% block body %}
+
+    <link href="{{ asset('css/Cart.css') }}" rel="stylesheet"/>
+
+    <div class="articleWithFilter">
+
+
+        <div class="all-article">
+            <p class="panier">Quantité panier : {{ cart | length }}</p>
+            <p class="trait-cart"></p>
+            {% set total = 0 %}
+            {% for item in cart %}
+                <div class="cart-article">
+                    <img class="img-30" src="{{ item.image }}">
+                    <p> Nom : <a href="/article/{{ item.id }}"> {{ item.nom }}</a></p>
+                    <p>Quantité: {{ item.qty }}</p>
+                    <p>Total: {{ item.qty * item.unitPrice }} €</p>
+                    {% set total = total + item.qty * item.unitPrice %}
+
+                    <div class="container">
+                        <label for="delete" onclick="removeFromCart({{ item.id }})">
+                            <div class="wrapper">
+                                <div class="lid"></div>
+                                <div class="can"></div>
+                                <span>delete</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <p class="trait-cart"></p>
+            {% endfor %}
+            <div class="paypal">
+                {% if cart|length > 0 %}
+                    <p>Frais de livraison: 20 €</p>
+                    <p>Total : {{ total + 20 }} €</p>
+                {% if app.user %}
+
+                    <div id="paypal-button-container">
+
+                    </div>
+                    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+                    <script>
+                        paypal.Buttons({
+                            createOrder: function (data, actions) {
+                                // This function sets up the details of the transaction, including the amount and line item details.
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '{{ total + 20 }}',
+                                            currency: 'EUR'
+                                        }
+                                    }]
+                                });
+                            },
+                            onApprove: function (data, actions) {
+                                // This function captures the funds from the transaction.
+                                return actions.order.capture().then(function (details) {
+                                    // This function shows a transaction success message to your buyer.
+                                    createCommand(details)
+                                });
+                            }
+                        }).render('#paypal-button-container');
+
+
+                        function createCommand(details) {
+                            let data = {
+                                {% for item in cart %}
+                                item_{{ loop.index }} : {
+                                    id: {{ item.id }},
+                                    qty: {{ item.qty }},
+                                    country: details.payer.address.country_code,
+                                    city: details.payer.address.admin_area_2,
+                                    zip: details.payer.address.postal_code,
+                                    address: details.payer.address.address_line_1,
+                                    mailVendeur: details.purchase_units[0].payee.email_address,
+                                    nomVendeur: details.purchase_units[0].soft_descriptor,
+                                },
+                                {% endfor %}
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/commande/api/createCommande',
+                                data: data,
+                                success: function (data) {
+                                    window.location.replace("/commande");
+                                }
+                            });
+                        }
+
+                        var cartNumber = {{ cart | length }}
+
+                            function removeFromCart(id) {
+                                let data = {
+                                    id: id
+                                };
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/removeFromCart',
+                                    data: data,
+                                    success: function (data) {
+                                        console.log(data);
+                                        window.location.reload()
+                                    }
+                                });
+                            }
+                    </script>
+
+                {% else %}
+                    <a href="/login">Veuillez vous connecter</a>
+                    <script>
+                        function removeFromCart(id) {
+                            let data = {
+                                id: id
+                            };
+                            $.ajax({
+                                type: "POST",
+                                url: '/removeFromCart',
+                                data: data,
+                                success: function (data) {
+                                    console.log(data);
+                                    window.location.reload()
+                                }
+                            });
+                        }
+                    </script>
+                {% endif %}
+                {% else %}
+                    <p>Votre panier est vide</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

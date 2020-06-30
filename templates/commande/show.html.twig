@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h1>Commande</h1>
+    {% set price = 0 %}
+
+   {% for commande in commandes %}
+        {{ commande.article.nom }}
+       {% set price = price + commande.prixArticleCommande * commande.qte %}
+    {% endfor %}
+
+    {% set price = price + 20 %}
+
+    Frais de port : 20€
+
+    Lieu de livraison: {{ address }} {{ city }} {{ zip }} {{ country }}
+
+    Etat de commande : {{ etat }}
+
+    Total: {{ price }} €
+
+    <a href="{{ path('commande_index') }}">back to list</a>
+
+{% endblock %}

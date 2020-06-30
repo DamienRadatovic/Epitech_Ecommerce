@@ -1,0 +1,277 @@
+.user-flex {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+body {
+    background-color: #FAFAFA !important;
+}
+
+.user-info {
+    height: auto;
+    width: 68%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.user-info p {
+    font-family: 'Heebo', sans-serif, regular;
+    font-size: 19px;
+    color: #707070;
+    text-decoration: none;
+    margin: 5% 9% 5% 9%;
+}
+
+.user-setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    height: 100%;
+    width: 30%;
+    margin-right: 1%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.user-setting p {
+    font-family: 'Heebo', sans-serif, regular;
+    padding: 1px;
+    font-size: 16px;
+    margin: 0;
+    color: #707070;
+    text-decoration: none;
+}
+
+.name {
+    font-family: 'Heebo', sans-serif, regular;
+    font-style: italic;
+    padding: 1px;
+    font-size: 16px;
+    margin-bottom: 5% !important;
+    color: #707070;
+    text-decoration: none;
+}
+
+.disconnect a {
+    font-family: 'Heebo', sans-serif, regular;
+    padding: 8px;
+    background-color: #DD5252;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 1%;
+    color: white;
+    text-decoration: none;
+}
+
+.disconnect a:hover {
+    cursor: pointer;
+    color: #f3f3f3;
+    text-decoration: none;
+    background-color: #733645;
+}
+
+.disconnect a:hover {
+    cursor: pointer;
+    background-color: #733645;
+    text-decoration: none;
+}
+
+.user-img {
+    background: white;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    margin-top: 6%;
+    margin-bottom: 6%;
+    border: 1px solid #E5E5E5;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.user-img img {
+    margin: auto;
+    margin-top: 9px;
+}
+
+.information-setting {
+    justify-content: center;
+    margin-top: 10%;
+    width: 100%;
+    height: 50px;
+    border-top: 2px solid #E0E0E0;
+    border-bottom: 2px solid #E0E0E0;
+    background-color: #c6c6c6;
+    display: flex;
+}
+
+.information-commandes {
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    display: flex;
+}
+
+.information-setting:focus {
+    background-color: red;
+}
+
+.information-setting:hover p {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.information-setting:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #707070;
+    text-decoration: none;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    margin: 4%;
+}
+
+.send {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #7699A7 !important;
+    border-color: #7699A7 !important;
+}
+
+.btn-warning:focus {
+    outline: none !important;
+}
+
+label {
+    font-family: 'Heebo', sans-serif, regular;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.pdf {
+    background: #ffffff;
+    border: solid 1px #e6e6e6;
+    border-radius: 2px;
+    display: inline-block;
+    height: 100px;
+    line-height: 100px;
+    margin: 5px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
+}
+
+.pdf span {
+    background: #f2594b;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: normal;
+    padding: 5px 10px;
+    position: relative;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.pdf span:last-child {
+    margin-left: -20px;
+}
+
+.pdf:before,
+.pdf:after {
+    background: #ffffff;
+    border: solid 3px #9fb4cc;
+    border-radius: 4px;
+    content: "";
+    display: block;
+    height: 35px;
+    left: 50%;
+    margin: -17px 0 0 -12px;
+    position: absolute;
+    top: 50%;
+    /*transform:translate(-50%,-50%);*/
+
+    width: 25px;
+}
+
+.pdf:hover:before,
+.pdf:hover:after {
+    background: #e2e8f0;
+    text-decoration: none;
+}
+/*a:before{transform:translate(-30%,-60%);}*/
+
+.pdf:before {
+    margin: -23px 0 0 -5px;
+}
+
+.pdf:hover {
+    background: #e2e8f0;
+    border-color: #9fb4cc;
+    text-decoration: none;
+}
+
+.pdf:active {
+    background: #dae0e8;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.pdf span:first-child {
+    display: none;
+}
+
+.pdf:hover span:first-child {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.pdf:hover span:last-child {
+    display: none;
+    text-decoration: none;
+}
+
+.pdf-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+}
+
+.pdf-text {
+    font-family: 'Heebo', sans-serif, regular;
+    font-size: 16px;
+    margin: 0;
+    color: #707070;
+    text-decoration: none !important;
+}
+
+.pdf-text:hover {
+    font-family: 'Heebo', sans-serif, regular;
+    font-size: 16px;
+    margin: 0;
+    color: #707070;
+    text-decoration: none !important;
+}

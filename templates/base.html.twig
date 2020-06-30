@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ asset('css/Nav.css') }}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Heebo&display=swap" rel="stylesheet">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <title>ECommerce</title>
+    {% block stylesheets %}{% endblock %}
+
+    <div class="HEADER">
+
+        {% if app.user %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/user/user'">Compte</p>
+            </div>
+        {% else %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/login'">Se connecter</p>
+            </div>
+        {% endif %}
+        <div class="Navbar">
+            <div class="NavbarColumnLogo">
+                <img src="{{ asset('icon/Logo.png') }}" class="Logo" onclick="window.location.href='/'">
+
+                <div class="Trait"></div>
+            </div>
+
+            <div class="NavbarColumn" id="colcateg">
+                <div class="ItemArrows">
+                    <a class="MenuText" style="
+    text-decoration: none;">Catégories</a>
+                    <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="categ-content">
+                    <div class="categ-content-row">
+                    </div>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText" href="/article" style="
+    text-decoration: none;">Nouveautés</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Nouveautés') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText" style="
+    text-decoration: none;" href="/article/promotion">Promotions</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Promotions') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
+                </div>
+            </div>
+
+            <div class="NavbarTrait">
+                <div class="TraitSecond"></div>
+                <div class="search-container">
+                    <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
+                        <img src="{{ asset('../icon/SearchIcon.png') }}"
+                             style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
+                        <input class="navSearch" name="search" placeholder="Chercher un produit, une marque…"
+                               onkeyup="searchItem(this.value)">
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="dropdown-content-row">
+                        </div>
+                    </div>
+                </div>
+                <div class="TraitThird"></div>
+                <div class="Cart" onclick="window.location.href='/cart'">
+                    <img src="{{ asset('../icon/Cart.png') }}" class="CartLogo0">
+                    <div class="Panier-line"></div>
+                    <div class="Panier-number">
+                        {% block cartNumber %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+<script>
+    var cartNumber = 0;
+    $('.dropdown-content').hide();
+
+    function searchItem(term) {
+        if (term === '') {
+            $('.dropdown-content').hide();
+            $(".dropdown-content-row").html("")
+            return
+        }
+        console.log(term);
+        let data = {
+            'term': term,
+        };
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: '/article/api/searchByterm',
+            data: data,
+            success: function (data) {
+                console.log(data);
+                $('.dropdown-content').show();
+                $(".dropdown-content-row").html("")
+                data.articles.forEach(item => {
+                    $(".dropdown-content-row").append("<a href=\"/article/" + item.id + "\">" + item.nom + "</a>")
+                })
+            }
+        });
+    }
+
+    $(window).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: '/getCart',
+            success: function (data) {
+                cartNumber = Object.keys(data.cart).length;
+                if (cartNumber > 0) {
+                    $('.Panier-number').replaceWith('<div class="Panier-number">' + Object.keys(data.cart).length + '</div>');
+                }
+                if (cartNumber > 0) {
+                    $('.CartLogo0').addClass('CartLogo1');
+                    $('.CartLogo1').removeClass('CartLogo0');
+                    $('.Panier-line').addClass('Underline');
+                    $('.Underline').removeClass('Panier-line');
+                    $('.Panier-number').addClass('Number');
+                    $('.Number').removeClass('Panier-number');
+                }
+                console.log(cartNumber);
+            }
+        });
+    })
+
+    $.ajax({
+        type: "GET",
+        url: '/article/api/getCategories',
+        success: function (data) {
+            data.forEach(element => {
+                $('.categ-content-row').append('<a href="/article/categorie/' + element + '">' + element + '</option>')
+            });
+        }
+    });
+
+    $('.categ-content').hide();
+
+    $(document).click(function (e) {
+        var container = $("#colcateg");
+        if (container.has(e.target).length === 0) {
+            $('.categ-content').hide();
+        } else {
+            $('.categ-content').show();
+        }
+    });
+
+
+</script>
+</body>
+{% block footer %}
+    <div class="footer">
+        <div class="all-footer">
+            <div class="footer-container-logo">
+                <img class="footer-logo" src="{{ asset('icon/Logo_B&W.png') }}"/>
+            </div>
+            <div class="footer-liens">
+                <p class="footer-title">Liens rapides</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Carte%20mère'">Carte mère</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Disque%20SSD'">Disque SSD</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Carte%20graphique'">Carte
+                    graphique</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Processeur'">Processeur</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Ventilateur'">Ventilateur</p>
+            </div>
+            <div class="footer-compte">
+                <p class="footer-title">Compte</p>
+                <p class="footer-link" onclick="window.location.href='/user/user'">Informations</p>
+                <p class="footer-link" onclick="window.location.href='/commande'">Commandes</p>
+                <p class="footer-link" onclick="window.location.href='/api/doc'">Documentation</p>
+            </div>
+            <div class="footer-click">
+                <img class="footer-epitech" src="{{ asset('Epitech.png') }}"
+                     onclick="window.location.href='https://www.epitech.eu/fr/ecole-informatique-montpellier/'">
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>© 2020 Copyright</p>
+    </div>
+{% endblock %}
+</html>

@@ -1,0 +1,448 @@
+.HEADER {
+    z-index: 1000000000000000000000000000000000;
+    display: flex;
+    top: 0;
+    position: fixed;
+    justify-content: center;
+    height: 13%;
+    width: 100%;
+    background-color: #FAFAFA;
+}
+
+body {
+    background-color: #FAFAFA;
+    margin: 0 !important;
+}
+
+.navSearch {
+    font-family: 'Heebo', sans-serif, medium;
+    color: #969696;
+    width: 100%;
+    font-size: 16px;
+    background-color: white;
+    border: hidden;
+}
+
+.navSearch:focus {
+    outline: none;
+}
+
+.NavbarTrait {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.ItemArrows {
+    display: flex;
+}
+
+.Navbar {
+    display: flex;
+    margin-top: 2.5%;
+    height: 58%;
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 3.85%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.NavbarColumnLogo {
+    display: flex;
+    height: 100%;
+    width: 15%;
+    align-self: center;
+}
+
+.NavbarColumn {
+    margin-left: 4%;
+    margin-right: 3%;
+    align-self: center;
+}
+
+.NavbarColumn:hover a {
+    color: #A0A0A0;
+    cursor: pointer;
+}
+
+.NavbarColumn:hover i.fa.fa-caret-down {
+    color: #A0A0A0;
+    cursor: pointer;
+}
+
+.Arrow {
+    background: url("../icon/Down-Arrow.png") no-repeat;
+    background-size: 10%;
+}
+
+.MenuText {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 17px;
+    color: #707070;
+    text-decoration: none !important;
+}
+
+i.fa.fa-caret-down {
+    margin-left: 9%;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #707070;
+}
+
+.Logo {
+    width: 37%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Logo:hover {
+    cursor: pointer;
+}
+
+.Cart {
+    width: 19%;
+    display: flex;
+}
+
+.Cart:hover {
+    cursor: pointer;
+}
+
+.Trait {
+    width: 1.1%;
+    background-color: #EAEAEA;
+}
+
+.TraitSecond {
+    width: 0.1%;
+    background-color: #EAEAEA;
+}
+
+.TraitThird {
+    width: 0.3%;
+    background-color: #EAEAEA;
+}
+
+.search-container {
+    display: flex;
+    height: 100%;
+    width: 81%;
+}
+
+
+.topnav {
+    overflow: hidden;
+    background-color: #e9e9e9;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #2196F3;
+    color: white;
+}
+
+.topnav .search-container {
+    float: right;
+}
+
+.topnav input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+}
+
+.topnav .search-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+    background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav .search-container {
+        float: none;
+    }
+
+    .topnav a, .topnav input[type=text], .topnav .search-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+
+    .topnav input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+
+.CartLogo0 {
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+    height: 50%;
+}
+
+.CartLogo1 {
+    margin-left: auto;
+    margin-right: 50%;
+    align-self: center;
+    height: 40%;
+    margin-bottom: 4%;
+}
+
+.Underline {
+    margin-top: 3%;
+    position: absolute;
+    background-color: #DD5252;
+    height: 3%;
+    width: 4%;
+    margin-left: 2.4%;
+}
+
+.Number {
+    margin-top: 1%;
+    position: absolute;
+    margin-left: 5.2%;
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 18px;
+    color: #707070;
+}
+
+.active, .Item:hover .UnderlineMenu {
+    margin-top: 0.3%;
+    position: absolute;
+    background-color: #DD5252;
+    height: 2%;
+    width: 6%;
+    margin-left: 0.1%;
+}
+
+.active .UnderlineMenu {
+    margin-top: 0.3%;
+    position: absolute;
+    background-color: #DD5252;
+    height: 2%;
+    width: 6%;
+    margin-left: 0.1%;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 40%;
+    height: 21px;
+}
+
+.user img {
+    height: 73%;
+}
+
+.user p {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: none;
+    margin-left: 13px;
+    margin-top: 16px;
+}
+
+.user p:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: flex;
+    position: absolute;
+    background-color: white;
+    flex-direction: column;
+    margin-top: 4%;
+    width: 40%;
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.dropdown-content-row {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    align-self: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.dropdown-content-row a {
+    font-family: 'Heebo', sans-serif, medium;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: none;
+}
+
+.dropdown-content-row a:hover {
+    background-color: lightgray;
+}
+
+.categ-content {
+    display: flex;
+    position: absolute;
+    background-color: white;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 1.4%;
+    margin-left: -3.65%;
+    width: 11%;
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.categ-content-row {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-self: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.categ-content-row a {
+    font-family: 'Heebo', sans-serif, medium;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: none;
+}
+
+.categ-content-row a:hover {
+    background-color: lightgray;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 220px;
+    bottom: 0;
+    margin-top: 3%;
+    width: 100%;
+    background-color: #3A3535;
+}
+
+.all-footer {
+    display: flex;
+}
+
+.footer-logo {
+    margin: auto;
+    width: 70px;
+    height: 95px;
+}
+
+.footer-liens {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+.footer-title {
+    font-family: 'Heebo', sans-serif;
+    font-weight: bolder;
+    color: white;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 5px;
+
+}
+
+.footer-compte {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+.footer-link {
+    margin: 2px;
+    width: auto;
+    font-family: 'Heebo', sans-serif;
+    font-weight: lighter;
+    color: white;
+    font-size: 14px;
+}
+
+.footer-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.footer-click {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-epitech {
+    width: 10%;
+    margin: auto;
+}
+
+.footer-epitech:hover {
+    cursor: pointer;
+}
+
+.footer-copyright {
+    font-family: 'Heebo', sans-serif;
+    color: white;
+    font-size: 16px;
+}
+
+.footer-container-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+}
+
+.footer-copyright {
+    background-color: #3A3535;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

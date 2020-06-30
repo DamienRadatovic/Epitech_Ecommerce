@@ -1,0 +1,210 @@
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+{#{{ form_start(form) }}#}
+{#    {{ form_widget(form) }}#}
+
+{#    <div id="slideBox">#}
+{#        <div class="topLayer">#}
+{#            <div class="right">#}
+{#                <div class="articleWithFilter">#}
+{#                <div class="add-container">#}
+{#                    <div class="form-title">#}
+{#                        <h2>Create New Article</h2>#}
+{#                    </div>#}
+{#                    <div class="form-container">#}
+{#                        <form id="form-login" method="post" onsubmit="return false;">#}
+{#                            <div class="form-element form-stack">#}
+{#                                <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">#}
+{#                                    {{ form_widget(form.images) }}#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Nom</label>#}
+{#                                {{ form_widget(form.nom) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Catégorie</label>#}
+{#                                {{ form_widget(form.categorie) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Prix Unitaire</label>#}
+{#                                {{ form_widget(form.prixUnitaire) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Poids</label>#}
+{#                                {{ form_widget(form.poids) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Quantité en Stock</label>#}
+{#                                {{ form_widget(form.qteEnStock) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Promotion</label>#}
+{#                                {{ form_widget(form.promotion) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Description</label>#}
+{#                                {{ form_widget(form.description) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Caractéristiques</label>#}
+{#                                {{ form_widget(form.caracteristiques) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Nouveauté</label>#}
+{#                                {{ form_widget(form.isNew) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-submit">#}
+{#                                <button class="login">{{ button_label|default('Ajouter') }}</button>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div>#}
+{#                    <a id="goRight" class="login off" href="{{ path('article_index') }}">#}
+{#                        back to list#}
+{#                    </a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+<div id="slideBox">
+    <div class="topLayer">
+        <div class="right">
+            <div class="content">
+                <h2>Nouvel article</h2>
+                {{form_start(form)}}
+                    <div class="form-element form-stack">
+                        <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+                            {{ form_widget(form.images) }}
+                        </ul>
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Nom</label>
+                        {{ form_widget(form.nom) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Catégorie</label>
+                        {{ form_widget(form.categorie) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Prix Unitaire</label>
+                        {{ form_widget(form.prixUnitaire) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Poids</label>
+                        {{ form_widget(form.poids) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Quantité en Stock</label>
+                        {{ form_widget(form.qteEnStock) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Promotion</label>
+                        {{ form_widget(form.promotion) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Description</label>
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Caractéristiques</label>
+                        {{ form_widget(form.caracteristiques) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <div class="checknew">
+                            {{ form_widget(form.isNew) }}
+                            <label class="form-label">Nouveauté</label>
+                        </div>
+                    </div>
+                    <div class="form-element form-submit">
+                        <button class="login" type="submit">{{ button_label|default('Ajouter') }}</button>
+                    </div>
+                    <div style="padding-top: 10px; text-align: center; padding-bottom: 10px;">
+                        <button class="login" onclick="window.location.href = '{{ path('article_index') }}';">back to list</button>
+                    </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+{#    <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">#}
+{#        {{ form_widget(form.images) }}#}
+{#    </ul>#}
+{#    {{ form_widget(form.nom) }}#}
+{#    {{ form_widget(form.categorie) }}#}
+{#    {{ form_widget(form.description) }}#}
+{#    {{ form_widget(form.caracteristiques) }}#}
+{#    {{ form_widget(form.prixUnitaire) }}#}
+{#    {{ form_widget(form.poids) }}#}
+{#    {{ form_widget(form.qteEnStock) }}#}
+{#    {{ form_widget(form.isNew) }}#}
+{#    {{ form_widget(form.promotion) }}#}
+{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#{{ form_end(form) }}#}
+
+<script>
+    var $collectionHolder;
+
+    // setup an "add a tag" link
+    var $addTagButton = $('<button type="button" class="add_tag_link">Add an image</button>');
+    var $newLinkLi = $('<li></li>').append($addTagButton);
+
+    jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('ul.images');
+
+        $collectionHolder.find('li').each(function() {
+            addTagFormDeleteLink($(this));
+        });
+
+        // add the "add a tag" anchor and li to the tags ul
+        $collectionHolder.append($newLinkLi);
+
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        $addTagButton.on('click', function(e) {
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+    });
+    function addTagForm($collectionHolder, $newLinkLi) {
+        // Get the data-prototype explained earlier
+
+        var prototype = $collectionHolder.data('prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        var newForm = prototype;
+        // You need this only if you didn't set 'label' => false in your tags field in TaskType
+        // Replace '__name__label__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        // newForm = newForm.replace(/__name__label__/g, index);
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        newForm = newForm.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormLi = $('<li></li>').append(newForm);
+        addTagFormDeleteLink($newFormLi);
+        $newLinkLi.before($newFormLi);
+    }
+
+    function addTagFormDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<button type="button">Delete this image</button>');
+        $tagFormLi.append($removeFormButton);
+
+        $removeFormButton.on('click', function(e) {
+            // remove the li for the tag form
+            $tagFormLi.remove();
+        });
+    }
+</script>

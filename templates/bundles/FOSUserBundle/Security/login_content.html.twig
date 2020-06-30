@@ -1,0 +1,155 @@
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ asset('css/Nav.css') }}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Heebo&display=swap" rel="stylesheet">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+
+    <div class="HEADER">
+
+        {% if app.user %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/user/user'">Compte</p>
+            </div>
+        {% else %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/login'">Se connecter</p>
+            </div>
+        {% endif %}
+        <div class="Navbar">
+            <div class="NavbarColumnLogo">
+                <img src="{{ asset('icon/Logo.png') }}" class="Logo" onclick="window.location.href='/'">
+
+                <div class="Trait"></div>
+            </div>
+
+            <div class="NavbarColumn" id="colcateg">
+                <div class="ItemArrows">
+                    <a class="MenuText" style="
+    text-decoration: none;">Catégories</a>
+                    <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="categ-content">
+                    <div class="categ-content-row">
+                    </div>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText" href="/article" style="
+    text-decoration: none;">Nouveautés</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Nouveautés') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText" style="
+    text-decoration: none;" href="/article/promotion">Promotions</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Promotions') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
+                </div>
+            </div>
+
+            <div class="NavbarTrait">
+                <div class="TraitSecond"></div>
+                <div class="search-container">
+                    <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
+                        <img src="{{ asset('../icon/SearchIcon.png') }}"
+                             style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
+                        <input class="navSearch" name="search" placeholder="Chercher un produit, une marque…"
+                               onkeyup="searchItem(this.value)">
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="dropdown-content-row">
+                        </div>
+                    </div>
+                </div>
+                <div class="TraitThird"></div>
+                <div class="Cart" onclick="window.location.href='/cart'">
+                    <img src="{{ asset('../icon/Cart.png') }}" class="CartLogo0">
+                    <div class="Panier-line"></div>
+                    <div class="Panier-number">
+                        {% block cartNumber %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</head>
+{% block body %}
+
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="{{ asset('css/Login.css') }}" rel="stylesheet"/>
+
+    {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+    {% endif %}
+
+    {#<form action="{{ path("fos_user_security_check") }}" method="post">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+        {% endif %}
+    </form>#}
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            {% endif %}
+            <div id="slideBox">
+                <div class="topLayer">
+                    <div class="right">
+                        <div class="content">
+                            <h2>Login</h2>
+                            <form id="form-login" method="post" onsubmit="return false;">
+                                <div class="form-element form-stack">
+                                    <label for="username" class="form-label">{{ 'username'|trans }}</label>
+                                    <input id="username" type="text" name="_username" value="{{ last_username }}"
+                                           required="required"
+                                           autocomplete="username">
+                                </div>
+                                <div class="form-element form-stack">
+                                    <label for="password" class="form-label">{{ 'password'|trans }}</label>
+                                    <input id="password" type="password" name="_password" required="required"
+                                           autocomplete="current-password">
+                                </div>
+                                <div class="form-element form-submit">
+                                    <button id="_submit" class="login" type="submit" name="_submit"
+                                            onclick="{{ 'submit'|trans }}">Log In
+                                    </button>
+                                    <button id="goRight" type="button" class="login off" name="signup"
+                                            onclick="window.location.href='register'">Sign Up
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+{% endblock %}

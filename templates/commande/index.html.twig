@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block body %}
+
+    <link href="{{ asset('css/Command.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <div class="user-flex">
+        <div class="user-setting">
+            <div class="user-img">
+                <img src="{{ asset('icon/user.png') }}"/>
+            </div>
+            <p>Bonjour</p>
+            <p class="name">{{ app.user.username }}</p>
+            <div class="disconnect">
+                <a href="/logout">ME DÉCONNECTER</a>
+            </div>
+            <div class="information-setting" onclick="window.location.href ='/user/user' ">
+                <p style="margin: auto;">Mes informations</p>
+            </div>
+            <div class="information-commandes">
+                <p style="margin: auto;">Mes commandes</p>
+            </div>
+        </div>
+        <div class="user-info">
+
+{#            {% set currentCommandId = 0 %}#}
+{#            {% for commande in commandes %}#}
+{#                {% if currentCommandId is not same as (commande.codeCommand) %}#}
+{#                    <div class="pdf-block">#}
+{#                        <a class="pdf-text">Commande du {{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</a>#}
+{#                        <a class="pdf" href="/commande/facture/{{ commande.codeCommand }}"#}
+{#                           download><span>Download</span><span>PDF</span></a>#}
+{#                    </div>#}
+{#                    {% set currentCommandId = commande.codeCommand %}#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+
+        </div><!-- /.container -->
+    </div>
+
+    <script>
+        $('#update').click(function () {
+            var data = {
+                'email': $('#email').val(),
+                'username': $('#username').val()
+            };
+
+
+        })
+        $.ajax({
+            type: "GET",
+            url: '/commande/api/apiGetCommandeByUserId/{{ app.user.id }}',
+            success: function (data) {
+                console.log(data);
+                data.forEach(element => {
+                    $('.user-info').append(" <div class=\"pdf-block\">\n" +
+                        "                        <a class=\"pdf-text\">Commande du "+element.date_commande+"</a>\n" +
+                        "                        <a class=\"pdf\" href=\"/commande/facture/"+element.code_command+"\"\n" +
+                        "                           download><span>Download</span><span>PDF</span></a>\n" +
+                        "                    </div>")
+                })
+            }
+        });
+    </script>
+{% endblock %}

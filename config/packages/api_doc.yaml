@@ -1,0 +1,16 @@
+nelmio_api_doc:
+  documentation:
+    basePath: "/"
+    schemes: [http]
+    info:
+      title: Documentation WEB_Ecommerce
+      description: Liste des commandes API utilisées
+      version: 1.0.0
+  areas:
+    path_patterns: # an array of regexps
+#      - ^/api
+      - ^/article/api
+#      - ^/cart
+      - ^/commande/api
+#      - ^/image/api
+      - ^/user/api

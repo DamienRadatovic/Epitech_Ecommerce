@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image{% endblock %}
+
+{% block body %}
+    <h1>Image</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ image.id }}</td>
+            </tr>
+            <tr>
+                <th>Lien</th>
+                <td>{{ image.lien }}</td>
+            </tr>
+            <tr>
+                <th>IsPrincipale</th>
+                <td>{{ image.isPrincipale ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSecondaire</th>
+                <td>{{ image.isSecondaire ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsDescription</th>
+                <td>{{ image.isDescription ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('image_index') }}">back to list</a>
+
+    <a href="{{ path('image_edit', {'id': image.id}) }}">edit</a>
+
+    {{ include('image/_delete_form.html.twig') }}
+{% endblock %}

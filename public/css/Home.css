@@ -1,0 +1,170 @@
+.body-pub {
+    display: flex;
+    height: 100%;
+    margin-bottom: 2%;
+    margin-top: 6%;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.body-promotions {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.body-nouveautés {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.body-nouveautés p {
+    font-family: 'Heebo', sans-serif, bold;
+    font-size: 25px;
+    color: #707070;
+    text-decoration: none;
+    margin-bottom: auto;
+}
+
+.body-promotions p {
+    font-family: 'Heebo', sans-serif, bold;
+    font-size: 25px;
+    color: #707070;
+    text-decoration: none;
+    margin-bottom: auto;
+}
+
+.publicité {
+    display: flex;
+    margin-top: 4%;
+    width: 100%;
+    height: 100%;
+}
+
+.imagePub {
+    background: url("../Pub/Pub_01.png") no-repeat;
+    width: 100%;
+    height: 50%
+}
+
+.promotions-home {
+    display: flex;
+    align-items: center;
+}
+
+.horizontal-big {
+    width: 11%;
+    height: 7px;
+    background-color: #7699A7;
+    z-index: 1;
+}
+
+.trait-horizontal {
+    width: 90%;
+    height: 1.3px;
+    background-color: #707070;
+    z-index: 0;
+}
+
+.promotion-produit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    height: 50%;
+}
+
+.produit-home-promotion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 3%;
+    width: 17%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.produit-home-promotion p {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: none;
+    margin-top: 0;
+}
+
+.produit-home-promotion p:hover {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.produit-home-promotion a {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #7699A7;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.img-100 {
+    padding: 10px 10px 10px 10px;
+    width: 85%;
+}
+
+.img-100:hover {
+    cursor: pointer;
+    width: 85%;
+}
+
+.voir-plus {
+    width: 85px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+.voir-plus img {
+    margin-top: 33px;
+    width: 36px;
+}
+
+.voir-plus img:hover {
+    -webkit-animation: rotation 0.5s;
+    cursor: pointer;
+    margin-top: 33px;
+    width: 36px;
+}
+
+@-webkit-keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(90deg);
+    }
+}
+
+.mySlides {
+    display: none
+}
+
+.w3-left, .w3-right, .w3-badge {
+    cursor: pointer
+}
+
+.w3-badge {
+    height: 13px;
+    width: 13px;
+    padding: 0
+}

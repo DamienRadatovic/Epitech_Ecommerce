@@ -1,0 +1,446 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+
+    <link href="{{ asset('css/All-Article.css') }}" rel="stylesheet"/>
+
+
+    <div class="articleWithFilter">
+        <div class="filter" id="myBtnContainer">
+            <div class="filterContainer">
+                <button class="btn" onclick="filter()"> Show all</button>
+                <div class="center">
+                    <select name="sources" id="sources" class="custom-select sources" placeholder="Catégorie">
+                    </select>
+                </div>
+                <div class="toggle-button">
+                    <ul class="tg-list">
+                        <div class="v-switcher-wrapper">
+                            <input type="range" id="switcher0" name="switcher0" {% if currentPage is same as('Nouveautés')%}  class="v-switcher v-switcher-mode--tri v-switcher-state--active" {% else %} class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" {% endif %}   onchange="changeSwitch($(this), 'new')" min="-1" max="1" step="1" {% if currentPage is same as('Nouveautés') %} value="1" {% endif %}/>
+                        </div>
+                        <p class="text-toggle">Nouveaux</p>
+                    </ul>
+                    <ul class="tg-list">
+                        <div class="v-switcher-wrapper">
+                            <input type="range" id="switcher1" name="switcher1" {% if currentPage is same as('Promotions')%}  class="v-switcher v-switcher-mode--tri v-switcher-state--active" {% else %} class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" {% endif %}   onchange="changeSwitch($(this), 'promo')" min="-1" max="1" step="1" {% if currentPage is same as('Promotions') %} value="1" {% endif %}/>
+                        </div>
+                        <p class="text-toggle">Promotion</p>
+                    </ul>
+                    <ul class="tg-list">
+                        <div class="v-switcher-wrapper">
+                            <input type="range" id="switcher2" name="switcher2" class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" onchange="changeSwitch($(this), 'stock')" min="-1" max="1" step="1" />
+                        </div>
+                        <p class="text-toggle">Stock</p>
+                    </ul>
+                </div>
+                <div style="z-index: 0;">
+                    <p class="price-select" id="price">1</p>
+                    <input type="range" min="1" max="1000" value="1" class="slider" id="myRange"
+                           onchange="minFilter($(this).val())">
+                </div>
+            </div>
+        </div>
+
+        <div class="all-article">
+
+        </div>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin-a">
+            <a href="{{ path('article_new') }}">Create new</a>
+        </div>
+    {% endif %}
+
+
+    <script>
+
+        var articles = [];
+
+        var yesStock = "{{ asset('icon/yes-stock.png') }} }}";
+        var noStock = "{{ asset('icon/no-stock.png') }} }}";
+
+        var isNew = null;
+        var isPromo = null;
+        var isStock = null;
+
+        var category = "";
+
+        var showAll = false;
+        {% if currentPage is defined %}
+            {% if currentPage is same as('Promotions') %}
+                isPromo = true;
+        {% endif %}
+            {% if currentPage is same as('Nouveautés') %}
+                isNew = true;
+            {% endif %}
+        {% endif %}
+        var min = 0;
+
+        function checkNew() {
+            isNew = !isNew;
+            showAll = false;
+            showArticles();
+        }
+
+        function onlyPromo() {
+            showAll = false;
+            isPromo = !isPromo;
+            showArticles();
+        }
+
+        function onlyStock() {
+            showAll = false;
+            isStock = !isStock;
+            showArticles();
+        }
+
+        function minFilter(prix) {
+            min = prix;
+            $('#price').html(prix);
+            showArticles();
+        }
+
+
+
+        {% for article in articles %}
+        var newArticle = [];
+        newArticle['isNew'] = "{{ article.isNew ? 'New' : null }}";
+        newArticle['nom'] = "{{ article.nom }}";
+        newArticle['caracteristiques'] = "{{ article.caracteristiques |truncate(30, true) }}";
+        newArticle['prixUnitaire'] = "{{ article.prixUnitaire }}";
+        {% if article.qteEnStock > 0 %}
+        newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
+        {% else %}
+        newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">";
+        {% endif %}
+        newArticle['qteEnStock'] = "{{ article.qteEnStock }}";
+        newArticle['promotion'] = "{{ article.promotion }}";
+        newArticle['categorie'] = "{{ article.categorie }}";
+        {% if article.promotion > 0 %}
+        newArticle['ispromotion'] = "-{{ article.promotion }}";
+        {% else %}
+        newArticle['ispromotion'] = "";
+        {% endif %}
+
+        newArticle['id'] = "{{ article.id }}";
+        {% for image in article.images %}
+        {% if loop.first %}
+        newArticle['image'] = "{{ image.lien }}";
+        {% endif %}
+        {% endfor %}
+
+
+        articles.push(newArticle);
+        {% endfor %}
+
+
+        $.ajax({
+            type: "GET",
+            url: '/article/api/getCategories',
+            success: function (data) {
+                data.forEach(element => {
+                    $('#sources').append('<option value="' + element + '">' + element + '</option>')
+                });
+                test();
+                {% if currentPage is same as('Categorie') %}
+                    {% if currentCategory is defined %}
+                        $(".custom-select-trigger").text('{{ currentCategory }}');
+                    {% endif %}
+                {%endif%}
+
+            }
+        });
+
+        $('#sources').change(function () {
+            category = $(this).val();
+            showArticles();
+        });
+
+        function filter() {
+            isNew = null;
+            isPromo = null;
+            isStock = null;
+
+            category = "";
+            $('.v-switcher').val(0);
+            $('.v-switcher').attr('class', '').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
+            $('#myRange').val(1);
+            $('#price').text('1');
+            min = 1;
+            articles = [];
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getAllArticles',
+                success: function (data) {
+
+                    data.forEach(element => {
+                        var newArticle = [];
+                        if (element.is_new) {
+                            newArticle['isNew'] = 'New';
+                        } else {
+                            newArticle['isNew'] = '';
+                        }
+                        newArticle['nom'] = "" + element.nom;
+                        newArticle['caracteristiques'] = "" + element.caracteristiques;
+                        newArticle['prixUnitaire'] = "" + element.prix_unitaire;
+                        newArticle['categorie'] = "" + element.categorie;
+                        if (element.qte_en_stock > 0) {
+                            newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
+                        } else {
+                            newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">";
+                        }
+                        newArticle['qteEnStock'] = "" + element.qte_en_stock;
+                        newArticle['promotion'] = "" + element.promotion;
+                        if (element.promotion > 0) {
+                            newArticle['ispromotion'] = "-" + element.promotion;
+                        } else {
+                            newArticle['ispromotion'] = "";
+                        }
+                        newArticle['id'] = element.id;
+                        newArticle['image'] = element.image;
+                        articles.push(newArticle);
+                    });
+                    $(".custom-select-trigger").text('Catégorie');
+
+                    showArticles();
+
+                    console.log(data);
+                }
+            });
+
+            // showArticles();
+        }
+
+        function showArticles() {
+            console.log('showAll => ' +showAll, 'isNew => ' + isNew, 'isStock => ' + isStock, 'isPromo => ' +isPromo);
+            $('.all-article').html('');
+            articles.forEach(element => {
+                console.log(element.prixUnitaire);
+                if (min >= parseInt(element.prixUnitaire)) {
+                    return;
+                }
+
+                if (showAll === false) {
+                    if (category !== "") {
+                        if (category !== element.categorie) {
+                            return;
+                        }
+                    }
+                    if (((isNew === true && element.isNew === '') || (isNew === false && element.isNew === 'New')) || ((isPromo === true && element.promotion <= 0) || (isPromo === false && element.promotion > 0))
+                        || ((isStock === true && element.isqteEnStock === "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">") || (isStock === false && element.isqteEnStock === "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"))
+                    ) {
+                        return;
+                    }
+                }
+                $('.all-article').append(
+                    '<div class="article">\n' +
+                    '<p class="new">' + element.isNew + '</p>\n' +
+                    '                        <img class="img-10" src="' + element.image + '">\n' +
+                    '                <div class="nom-description">\n' +
+                    '                    <p class="text">' + element.nom + '</p>\n' +
+                    '                    <p class="crop">' + element.caracteristiques.substr(0,25) + '...</p>\n' +
+                    '                </div>\n' +
+                    '                <div class="stock-price">\n' +
+                    '                    <p class="prix">' + element.prixUnitaire + '&#8364</p>\n' +
+                    '<p class="stock-texte">' + element.isqteEnStock + ' En stock</p>' +
+
+                    '                </div>\n' +
+                    '                <p class="text-promotion">\n' + element.ispromotion + '</p>\n' +
+                        checkStock(element) +
+                    '                <div class="show-edit">\n' +
+                    '                    <a href="/article/' + element.id + '">show</a>\n' +
+                {% if is_granted('ROLE_ADMIN') %}
+                    '                    <a href="/article/' + element.id + '/edit">Edit</a>\n'
+                {% else %}
+                    ''
+                        {% endif %}
+
+                );
+            })
+
+            var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+            for (var i = 0; i < bubblyButtons.length; i++) {
+                bubblyButtons[i].addEventListener('click', animateButton, false);
+            }
+        }
+
+
+        function checkStock(article)
+        {
+            if(article.qteEnStock > 0) {
+                return "<button class=\"bubbly-button\" onclick='addToCart("+article.id+")'>Ajouter</button>";
+            }else {
+                return "";
+            }
+        }
+
+        showArticles();
+
+        function readMore() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+
+        $('#myRange').on("change mousemove", function () {
+            $('#price').html($(this).val());
+        });
+
+
+        function test() {
+
+            $(".custom-select").each(function () {
+                var classes = $(this).attr("class"),
+                    id = $(this).attr("id"),
+                    name = $(this).attr("name");
+                var template = '<div class="' + classes + '">';
+                template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
+                template += '<div class="custom-options">';
+                $(this).find("option").each(function () {
+                    template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
+                });
+                template += '</div></div>';
+
+                $(this).wrap('<div class="custom-select-wrapper"></div>');
+                $(this).hide();
+                $(this).after(template);
+            });
+            $(".custom-option:first-of-type").hover(function () {
+                $(this).parents(".custom-options").addClass("option-hover");
+            }, function () {
+                $(this).parents(".custom-options").removeClass("option-hover");
+            });
+            $(".custom-select-trigger").on("click", function () {
+                $('html').one('click', function () {
+                    $(".custom-select").removeClass("opened");
+                });
+                $(this).parents(".custom-select").toggleClass("opened");
+                event.stopPropagation();
+            });
+            $(".custom-option").on("click", function () {
+                $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
+                $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
+                $(this).addClass("selection");
+                $(this).parents(".custom-select").removeClass("opened");
+                $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
+
+                category = $(this).data("value");
+                showArticles();
+            });
+        }
+
+        var addedToCart = 0;
+
+        function addToCart(articleId) {
+            console.log(articleId);
+            var cartNumber = {{ cart | length }} + addedToCart;
+            let imageArticle = '';
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getArticle/'+articleId,
+                success: function (data) {
+                    var article = data[0];
+                    imageArticle = article.images[0];
+                    let data2 = {
+                        id: article.id,
+                        nom: article.nom,
+                        qty: 1,
+                        unitPrice: article.prix_unitaire,
+                        image: imageArticle
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: '/addToCart',
+                        data: data2,
+                        success: function (data) {
+                            $('.Panier-line').replaceWith('<div class="Underline"></div>');
+                            $('.Panier-number').replaceWith('<div class="Number"></div>');
+                            $('.CartLogo0').addClass('CartLogo1');
+                            cartNumber++;
+                            addedToCart++;
+                            $('.Number').html(''+cartNumber+'');
+                        }
+                    });
+                }
+            });
+
+        }
+
+
+
+        var animateButton = function(e) {
+
+            e.preventDefault;
+            //reset animation
+            e.target.classList.remove('animate');
+
+            e.target.classList.add('animate');
+            setTimeout(function(){
+                e.target.classList.remove('animate');
+            },700);
+        };
+
+        var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+        for (var i = 0; i < bubblyButtons.length; i++) {
+            bubblyButtons[i].addEventListener('click', animateButton, false);
+        }
+
+
+
+        function changeSwitch(e, filter){
+            switch(e.val()) {
+                case '-1':
+                    e.attr('class', '');
+                    e.toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--passive');
+                    if(filter === 'new')
+                    {
+                        isNew = false;
+                    } else if( filter === 'promo') {
+                        isPromo = false;
+                    } else {
+                        isStock = false;
+                    }
+                    break;
+                case '0':
+                    e.attr('class', '');
+                    e.toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
+                    if(filter === 'new')
+                    {
+                        isNew = null;
+                    } else if( filter === 'promo') {
+                        isPromo = null;
+                    } else {
+                        isStock = null;
+                    }
+                    break;
+                case '1':
+                    e.attr('class', '');
+                    e.toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--active');
+                    if(filter === 'new')
+                    {
+                        isNew = true;
+                    } else if( filter === 'promo') {
+                        isPromo = true;
+                    } else {
+                        isStock = true;
+                    }
+                    break;
+            }
+            showArticles();
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,10 @@
+fos_user:
+  registration:
+    form:
+      type: App\Form\RegistrationType
+  db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+  firewall_name: main
+  user_class: App\Entity\User
+  from_email:
+    address: "mail@mail.mail"
+    sender_name: "Mail test"
